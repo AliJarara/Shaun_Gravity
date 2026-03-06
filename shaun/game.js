@@ -21,7 +21,7 @@ const gameData = {
     },
     endingOutro: {
         en: `Shaun is still out there somewhere. If you ever see a dog alone, you know what to do now.`,
-        ar: `شون لسا في مكان ما. إذا شفت يوم كلب لحاله، هلا بتعرف شو تعمل.`
+        ar: `شون لسا في مكان ما. إذا شفت بيوم كلب لحاله، هلا بتعرف شو تعمل.`
     },
     labels: {
         trustEn: `Shaun's Trust`,
@@ -73,10 +73,11 @@ const scenarios = [
             ar: `الشم هو طريقة الكلب ليجمع معلومات. سحب الإيد بخلق عدم ثقة، والمسح على الراس بسرعة ممكن يوتره.`
         }
     },
-    {
+     {
          state: 'anxious',
          media: 'Yawing.png',
          mediaType: 'image',
+         audio: 'yawning.mp3',
          situation: {
              en: `The dog's tail is low and it's yawning repeatedly. What does this mean?`,
              ar: `ذيله نازل لتحت وعم يتثاوب كتير. شو بيعنيها؟`
@@ -149,6 +150,7 @@ const scenarios = [
          state: 'anxious',
          media: 'Energy.mp4',
          mediaType: 'video',
+         audio: 'pacing.mp3',
          situation: {
              en: `Shaun is pacing around the house restlessly. What does he need?`,
              ar: `شون عم يلفلف بالبيت بدون توقف. شو محتاج؟`
@@ -219,10 +221,31 @@ const scenarios = [
     }
 ];
 
+// Game Audio Objects
+const bgMusic = new Audio('bgm.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.03;
+
+const sfx = {
+    correct: new Audio('correct.mp3'),
+    wrong: new Audio('wrong.m4a'),
+    click: new Audio('click.mp3')
+};
+
+// Preload SFX
+Object.values(sfx).forEach(audio => {
+    audio.load();
+    audio.preload = 'auto';
+});
+
+let currentScenarioAudio = null;
+let audioInitialized = false;
+
 // Game State
 let state = {
     screen: 'intro1', // intro1, intro2 (How to play), scenario, ending
     lang: 'en',
+    soundEnabled: true,
     trust: 50,
     trustHistory: [50],
     answersHistory: [],
@@ -232,6 +255,7 @@ let state = {
 // DOM Elements
 const appContainer = document.getElementById('app-container');
 const langToggle = document.getElementById('langToggle');
+const soundToggle = document.getElementById('soundToggle');
 const trustMeterContainer = document.getElementById('trust-meter-container');
 const trustLabel = document.getElementById('trust-label');
 const trustBarFill = document.getElementById('trust-bar-fill');
@@ -240,12 +264,61 @@ const trustValue = document.getElementById('trust-value');
 // Initialization
 function init() {
     langToggle.addEventListener('click', toggleLanguage);
+    if (soundToggle) {
+        soundToggle.addEventListener('click', toggleSound);
+    }
     render();
 }
 
 // Logic
+function initAudio() {
+    if (audioInitialized || !state.soundEnabled) return;
+    bgMusic.play().catch(e => console.log('BGM play failed:', e));
+    audioInitialized = true;
+}
+
+function toggleSound() {
+    state.soundEnabled = !state.soundEnabled;
+    if (soundToggle) {
+        soundToggle.innerText = state.soundEnabled ? '🔊' : '🔇';
+    }
+    
+    if (state.soundEnabled) {
+        bgMusic.play().catch(e => console.log('BGM play failed:', e));
+        if (currentScenarioAudio) currentScenarioAudio.play().catch(e => console.log(e));
+        audioInitialized = true;
+    } else {
+        bgMusic.pause();
+        if (currentScenarioAudio) currentScenarioAudio.pause();
+    }
+    playSound('click');
+}
+
+function playSound(type) {
+    if (!state.soundEnabled) return;
+    if (sfx[type]) {
+        // Clone the node to allow overlapping sounds
+        const soundClone = sfx[type].cloneNode();
+        if (type === 'click') {
+            soundClone.currentTime = 0.5;
+        }
+        soundClone.volume = sfx[type].volume;
+        soundClone.play().catch(e => console.log('Audio play failed:', e));
+        
+        // Only play the first 3.5 seconds of the wrong sound
+        if (type === 'wrong') {
+            setTimeout(() => {
+                soundClone.pause();
+                soundClone.src = '';
+            }, 3500);
+        }
+    }
+}
+
 function toggleLanguage() {
+    initAudio();
     state.lang = state.lang === 'en' ? 'ar' : 'en';
+    playSound('click');
     render();
 }
 
@@ -296,9 +369,14 @@ function render() {
         case 'scenario':
             contentBox.innerHTML = renderScenario();
             attachScenarioEvents(contentBox);
+            playScenarioAudio();
             break;
         case 'ending':
             contentBox.innerHTML = renderEnding();
+            if (currentScenarioAudio) {
+                currentScenarioAudio.pause();
+                currentScenarioAudio = null;
+            }
             break;
     }
     
@@ -399,9 +477,11 @@ function attachScenarioEvents(container) {
             buttons.forEach(b => b.disabled = true);
             
             if (isCorrect) {
+                playSound('correct');
                 e.target.classList.add('correct');
                 updateTrust(6);
             } else {
+                playSound('wrong');
                 e.target.classList.add('wrong');
                 updateTrust(-3);
                 // Highlight correct option as well
@@ -418,7 +498,21 @@ function attachScenarioEvents(container) {
     });
 }
 
+function playScenarioAudio() {
+    if (currentScenarioAudio) {
+        currentScenarioAudio.pause();
+        currentScenarioAudio = null;
+    }
+    const s = scenarios[state.currentScenarioIndex];
+    if (s.audio && state.soundEnabled) {
+        currentScenarioAudio = new Audio(s.audio);
+        currentScenarioAudio.play().catch(e => console.log('Scenario audio failed:', e));
+    }
+}
+
 function nextScenario() {
+    initAudio();
+    playSound('click');
     if (state.trustHistory[state.currentScenarioIndex + 1] === undefined) {
         state.trustHistory[state.currentScenarioIndex + 1] = state.trust;
     } else {
@@ -461,11 +555,15 @@ function renderEnding() {
 
 // Helpers
 window.goTo = function(screenName) {
+    initAudio();
+    playSound('click');
     state.screen = screenName;
     render();
 };
 
 window.restartQuiz = function() {
+    initAudio();
+    playSound('click');
     state.trust = 50;
     state.trustHistory = [50];
     state.answersHistory = [];
@@ -477,6 +575,8 @@ window.restartQuiz = function() {
 };
 
 window.goBack = function() {
+    initAudio();
+    playSound('click');
     if (state.screen === 'ending') {
         state.currentScenarioIndex = scenarios.length - 1;
         state.screen = 'scenario';
