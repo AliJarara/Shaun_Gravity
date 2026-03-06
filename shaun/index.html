@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shaun</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐶</text></svg>">
+    <!-- Add Google Fonts for better Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Inline SVG filter for pencil sketch texture -->
+    <svg style="display: none;">
+        <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+</head>
+<body>
+    <header class="app-header">
+        <div id="trust-meter-container" class="hidden">
+            <span id="trust-label">Shaun's Trust</span>
+            <div class="trust-bar-bg sketch-border">
+                <div id="trust-bar-fill" class="trust-bar-fill"></div>
+            </div>
+            <span id="trust-value">50%</span>
+        </div>
+        <div class="spacer" style="flex:1;"></div>
+        <button id="langToggle" class="btn-sketch toggle-btn">عربى</button>
+    </header>
+
+    <main id="app-container">
+        <!-- Javascript will inject the screens here -->
+    </main>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+:root {
+    --bg-color: #fcf9f2; /* Warm earthy white background */
+    --text-color: #333333; /* Charcoal sketch lines */
+    --accent-color: #d2b48c; /* Sandy brown accent */
+    --border-color: #4a4a4a;
+    --sketch-border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    --sketch-border-radius-alt: 15px 225px 15px 255px/225px 15px 255px 15px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Verdana', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+body.rtl {
+    direction: rtl;
+    font-family: 'Segoe UI', 'Cairo', 'Tajawal', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    min-height: 60px;
+}
+
+#trust-meter-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.trust-bar-bg {
+    width: 100px;
+    height: 16px;
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    filter: url(#pencil);
+}
+
+.trust-bar-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    width: 50%;
+    transition: width 0.5s ease-in-out;
+}
+
+.sketch-border {
+    border: 2px solid var(--border-color);
+    border-radius: var(--sketch-border-radius);
+    padding: 10px;
+    background: transparent;
+    filter: url(#pencil);
+}
+
+.sketch-container {
+    border: 2px solid var(--border-color);
+    border-radius: var(--sketch-border-radius-alt);
+    padding: 1.5rem;
+    background: transparent;
+    filter: url(#pencil);
+    margin-bottom: 1.5rem;
+}
+
+.btn-sketch {
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: var(--sketch-border-radius);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    margin: 0.5rem 0;
+    width: 100%;
+    text-align: inherit;
+    display: block;
+    filter: url(#pencil);
+    font-family: inherit;
+}
+
+.btn-sketch:hover:not(:disabled) {
+    background-color: rgba(210, 180, 140, 0.4);
+}
+
+.btn-sketch.correct {
+    background-color: rgba(143, 188, 143, 0.6); /* Greenish tint */
+}
+
+.btn-sketch.wrong {
+    background-color: rgba(205, 92, 92, 0.6); /* Reddish tint */
+}
+
+.btn-sketch:disabled {
+    cursor: default;
+}
+
+.toggle-btn {
+    width: auto;
+    padding: 0.5rem 1rem;
+}
+
+#app-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.shaun-photo {
+    width: 100%;
+    max-height: 40vh;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--sketch-border-radius);
+    filter: url(#pencil);
+    display: block;
+}
+
+.dog-video {
+    width: 100%;
+    max-height: 35vh;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--sketch-border-radius);
+    filter: url(#pencil);
+    display: block;
+}
+
+h1, h2, h3 {
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+p {
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+}
+
+.scenario-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.explanation-box {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: rgba(210, 180, 140, 0.15); /* Light sandy */
+}
+
+.nav-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+body.rtl .nav-buttons {
+    justify-content: flex-start;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.text-center {
+    text-align: center;
+}
