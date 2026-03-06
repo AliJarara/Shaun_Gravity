@@ -419,7 +419,12 @@ function attachScenarioEvents(container) {
 }
 
 function nextScenario() {
-    state.trustHistory[state.currentScenarioIndex + 1] = state.trust;
+    if (state.trustHistory[state.currentScenarioIndex + 1] === undefined) {
+        state.trustHistory[state.currentScenarioIndex + 1] = state.trust;
+    } else {
+        // We're going forward on already answered questions, set trust back to what it was
+        state.trust = state.trustHistory[state.currentScenarioIndex + 1];
+    }
     state.currentScenarioIndex++;
     if (state.currentScenarioIndex >= scenarios.length) {
         goTo('ending');
@@ -478,10 +483,6 @@ window.goBack = function() {
     } else if (state.currentScenarioIndex > 0) {
         state.currentScenarioIndex--;
     }
-    
-    // Clear the forward trust history and answer history so we don't skip ahead or re-add trust
-    state.trustHistory.length = state.currentScenarioIndex + 1;
-    state.answersHistory.length = state.currentScenarioIndex + 1;
     
     if (state.trustHistory[state.currentScenarioIndex] !== undefined) {
         state.trust = state.trustHistory[state.currentScenarioIndex];
