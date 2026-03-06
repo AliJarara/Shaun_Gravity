@@ -1,7 +1,7 @@
 const gameData = {
     intro1: {
         en: `I found Shaun alone in our backyard when he was just a puppy. I'd never had a dog before -- I didn't know what I was doing. A friend warned me he'd be better off with his family, but I chose to keep him. First time I ever felt like a dad.<br><br>We didn't have a fence. My parents weren't on board. He barked at the neighbors. I was at university, then work. I didn't know how to read him -- when he wanted to play, when he needed space, when he was just bored and going crazy with energy.<br><br>He started coming and going. Then one day he just... didn't come back. That was two years ago.<br><br>This game is what I wish I knew before I met him. Maybe it'll help you with yours -- or with the next Shaun you find alone in a backyard.`,
-        ar: `لقيت شون وحيد في حديقة بيتنا وهو بعده جرو صغير. ما كان عندي أي خبرة مع الكلاب، ما كنت أعرف شو أعمل. حذّرتني صديقة أنه أحسنله تدور ع عيلته، بس اخترت أخليه عندي. أول مرة بحياتي بحس إني صرت أب.<br><br>ما كان عندنا سياج. أهلي ما وافقوا. كان ينبح على الجيران. كنت مشغول بالجامعة وبعدين بالشغل. ما كنت أفهم شو بده -- لما بده يلعب، لما بده يكون لحاله، لما كان بس ينجن من الملل.<br><br>بدأ يطلع ويرجع. وبعدين يوم ما رجع. هاد صار من سنتين.<br><br>هاي الأشياء اللي جاي هي اللي كنت أتمنى أعرفها قبل ما أتعرف عليه. يمكن تفيدك مع كلبك -- أو مع أول شون بتلاقيه لحاله في حديقتك.`
+        ar: `لقيت شون وحيد في حديقة بيتنا وهو بعده جرو صغير. ما كان عندي أي خبرة مع الكلاب، ما كنت أعرف شو أعمل. حذّرتني صديقة أنه أحسنله تدور ع عيلته، بس اخترت أخليه عندي. أول مرة بحياتي بحس إني صرت أب.<br><br>ما كان عندنا سياج. أهلي ما وافقوا. كان ينبح على الجيران. كنت مشغول بالجامعة وبعدين بالشغل. ما كنت أفهم شو بده -- لما بده يلعب، لما بده يكون لحاله، لما كان بس ينجن من الملل.<br><br>بدأ يطلع ويرجع. وبعدين يوم ما رجع.ها صار من سنتين.<br><br>هاي الأشياء اللي جاي هي اللي كنت أتمنى أعرفها قبل ما أتعرف عليه. يمكن تفيدك مع كلبك -- أو مع أول شون بتلاقيه لحاله في حديقتك.`
     },
     howToPlay: {
         en: `<h2>How to play</h2><p>Read the situation, choose the right action, learn from Shaun.</p><p>Keep an eye on the "Shaun's Trust" meter at the top. It goes up when you make the right choice, and goes down when you don't. Try to build a strong bond!</p>`,
@@ -13,7 +13,7 @@ const gameData = {
     },
     endingMed: {
         en: `You're learning. Shaun would have been patient with you.`,
-        ar: `أنت تتعلم. كان شون سيكون صبوراً معك.`
+        ar: `أنت عم تتعلم. شون كان حيكون صبوراً معك.`
     },
     endingLow: {
         en: `It's okay. You're here, and that already means something.`,
@@ -28,6 +28,8 @@ const gameData = {
         trustAr: `ثقة شون`,
         next: { en: `Next →`, ar: `← التالي` },
         start: { en: `Play →`, ar: `← العب` },
+        previous: { en: `← Previous`, ar: `السابق →` },
+        restart: { en: `Restart ↺`, ar: `إعادة ↺` },
         followInsta: { en: `Follow Shaun on Instagram → @shaun_zasheep`, ar: `@shaun_zasheep ← تابع شون على إنستغرام` },
         langToggleEn: `عربى`, // when in EN, toggle shows Arabic
         langToggleAr: `English` // when in AR, toggle shows English
@@ -77,7 +79,7 @@ const scenarios = [
          mediaType: 'image',
          situation: {
              en: `The dog's tail is low and it's yawning repeatedly. What does this mean?`,
-             ar: `ذيله نازل لتحت وعم يتثاوب كتير. شو بيعني هاد؟`
+             ar: `ذيله نازل لتحت وعم يتثاوب كتير. شو بيعنيها؟`
          },
          options: [
              { text: { en: `It's tired and wants to sleep`, ar: `تعبان وبده ينام` }, isCorrect: false },
@@ -95,7 +97,7 @@ const scenarios = [
          mediaType: 'video',
          situation: {
              en: `Shaun has been alone at home all day. You come back and he's destroyed a pillow. What does this mean?`,
-             ar: `شون كان لحاله بالبيت كل اليوم. رجعت ولقيته ممزع مخدة. شو بيعني هاد؟`
+             ar: `شون كان لحاله بالبيت كل اليوم. رجعت ولقيته ممزع مخدة. شو بيعنيها؟`
          },
          options: [
              { text: { en: `He's being naughty and needs discipline`, ar: `عم يسيء الأدب ومحتاج عقاب` }, isCorrect: false },
@@ -167,7 +169,7 @@ const scenarios = [
          mediaType: 'image',
          situation: {
              en: `A street dog suddenly freezes and stares at you. What do you do?`,
-             ar: `كلب شارع فجأة وقف بمكانه وعم يحدق فيك. شو بتعمل؟`
+             ar: `كلب شارع فجأة وقف بمكانه وعم يجحر فيك. شو بتعمل؟`
          },
          options: [
              { text: { en: `Stare back to show you're not scared`, ar: `تطلع بعيونه لتفرجيه إنك مو خايف` }, isCorrect: false },
@@ -176,7 +178,7 @@ const scenarios = [
          ],
          explanation: {
              en: `Freezing is a warning sign. Running triggers chase instinct. Slow, calm retreat is the safest response.`,
-             ar: `التجمد هو علامة تحذير. الركض بحفز غريزة المطاردة عنده. التراجع الهادي والبطيء هو أأمن رد فعل.`
+             ar: `التجمد هو علامة تحذير. الركض بحفز غريزة المطاردة عنده. التراجع الهادي والبطيء هو اأمن رد فعل.`
          }
     },
     {
@@ -194,7 +196,7 @@ const scenarios = [
          ],
          explanation: {
              en: `Dogs need downtime just like people. Respecting that builds trust and makes them feel safe.`,
-             ar: `الكلاب بتحتاج وقت للراحة مثل البشر. احترام هاد الشيء بيبني ثقة وبخليهم يحسوا بالأمان.`
+             ar: `الكلاب بتحتاج وقت للراحة مثل البشر. احترامها الشيء بيبني ثقة وبخليهم يحسوا بالأمان.`
          }
     },
     {
@@ -222,6 +224,8 @@ let state = {
     screen: 'intro1', // intro1, intro2 (How to play), scenario, ending
     lang: 'en',
     trust: 50,
+    trustHistory: [50],
+    answersHistory: [],
     currentScenarioIndex: 0
 };
 
@@ -347,17 +351,32 @@ function renderScenario() {
         <div id="options-container">
     `;
     
+    const previousAnswerIdx = state.answersHistory[state.currentScenarioIndex];
+    const hasAnswered = previousAnswerIdx !== undefined;
+
     s.options.forEach((opt, idx) => {
-        html += `<button class="btn-sketch option-btn" data-idx="${idx}">${opt.text[state.lang]}</button>`;
+        let btnClass = "btn-sketch option-btn";
+        if (hasAnswered) {
+            if (s.options[idx].isCorrect) {
+                btnClass += " correct";
+            } else if (idx === previousAnswerIdx && !s.options[idx].isCorrect) {
+                btnClass += " wrong";
+            }
+        }
+        html += `<button class="${btnClass}" data-idx="${idx}" ${hasAnswered ? 'disabled' : ''}>${opt.text[state.lang]}</button>`;
     });
     
     html += `</div>
-        <div id="feedback-container" class="hidden">
-            <div id="explanation" class="explanation-box sketch-border"></div>
+        <div id="feedback-container" class="${hasAnswered ? '' : 'hidden'}">
+            <div id="explanation" class="explanation-box sketch-border">
+                ${hasAnswered ? `<strong>${s.options[previousAnswerIdx].isCorrect ? '✓' : '❌'}</strong> <br><br>${s.explanation[state.lang]}` : ''}
+            </div>
             <div class="nav-buttons">
                 <button class="btn-sketch" onclick="nextScenario()">${gameData.labels.next[state.lang]}</button>
             </div>
         </div>
+        
+        ${state.currentScenarioIndex > 0 ? `<div style="margin-top: 1.5rem; text-align: center;"><a href="#" onclick="event.preventDefault(); window.goBack();" style="color: var(--text-color); font-weight: bold; text-decoration: none;">${gameData.labels.previous[state.lang]}</a></div>` : ''}
     `;
     
     return html;
@@ -372,6 +391,9 @@ function attachScenarioEvents(container) {
             const idx = parseInt(e.target.dataset.idx);
             const s = scenarios[state.currentScenarioIndex];
             const isCorrect = s.options[idx].isCorrect;
+            
+            // Save answer to history
+            state.answersHistory[state.currentScenarioIndex] = idx;
             
             // Disable all buttons to prevent multiple guesses
             buttons.forEach(b => b.disabled = true);
@@ -397,6 +419,7 @@ function attachScenarioEvents(container) {
 }
 
 function nextScenario() {
+    state.trustHistory[state.currentScenarioIndex + 1] = state.trust;
     state.currentScenarioIndex++;
     if (state.currentScenarioIndex >= scenarios.length) {
         goTo('ending');
@@ -423,6 +446,10 @@ function renderEnding() {
             <a href="https://www.instagram.com/shaun_zasheep" target="_blank" class="btn-sketch" style="text-decoration: none; margin-top: 1.5rem; display: inline-block; width: auto;">
                 ${gameData.labels.followInsta[state.lang]}
             </a>
+            <div class="nav-buttons" style="justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn-sketch" onclick="window.goBack()" style="width: auto; margin:0;">${gameData.labels.previous[state.lang]}</button>
+                <button class="btn-sketch" onclick="window.restartQuiz()" style="width: auto; margin:0;">${gameData.labels.restart[state.lang]}</button>
+            </div>
         </div>
     `;
 }
@@ -430,6 +457,40 @@ function renderEnding() {
 // Helpers
 window.goTo = function(screenName) {
     state.screen = screenName;
+    render();
+};
+
+window.restartQuiz = function() {
+    state.trust = 50;
+    state.trustHistory = [50];
+    state.answersHistory = [];
+    state.currentScenarioIndex = 0;
+    state.screen = 'scenario';
+    trustBarFill.style.width = `50%`;
+    trustValue.innerText = `50%`;
+    render();
+};
+
+window.goBack = function() {
+    if (state.screen === 'ending') {
+        state.currentScenarioIndex = scenarios.length - 1;
+        state.screen = 'scenario';
+    } else if (state.currentScenarioIndex > 0) {
+        state.currentScenarioIndex--;
+    }
+    
+    // Clear the forward trust history and answer history so we don't skip ahead or re-add trust
+    state.trustHistory.length = state.currentScenarioIndex + 1;
+    state.answersHistory.length = state.currentScenarioIndex + 1;
+    
+    if (state.trustHistory[state.currentScenarioIndex] !== undefined) {
+        state.trust = state.trustHistory[state.currentScenarioIndex];
+    } else {
+        state.trust = 50;
+    }
+    
+    trustBarFill.style.width = `${state.trust}%`;
+    trustValue.innerText = `${Math.round(state.trust)}%`;
     render();
 };
 
